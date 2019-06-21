@@ -12,7 +12,7 @@ import (
 	"github.com/Masterminds/semver"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/golang/glog"
-	minibrokerhelm "github.com/osbkit/minibroker/pkg/helm"
+	minibrokerhelm "github.com/kubernetes-sigs/minibroker/pkg/helm"
 	"github.com/pkg/errors"
 	osb "github.com/pmorie/go-open-service-broker-client/v2"
 	"gopkg.in/yaml.v2"
