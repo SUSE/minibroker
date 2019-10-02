@@ -18,18 +18,9 @@ serviceCatalogEnabledOnly: true
 
 deployServiceCatalog: false
 
-tiller:
-  version: 2.14.2
-  image: helm-tiller
-  registry: 
+kube:
+  registry:
     hostname: registry.suse.com
     username: ""
     password: ""
   organization: cap
-
-kube:
-  registry:
-    hostname: index.docker.io
-    username: ""
-    password: ""
-  organization: splatform
