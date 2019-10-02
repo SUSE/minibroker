@@ -56,5 +56,3 @@ spec:
           value: {{ .Release.Namespace }}
         - name: TILLER_HISTORY_MAX
           value: "1"
-        command: ["/tiller"]
-        args: ["--listen=localhost:44134"]
