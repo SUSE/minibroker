@@ -20,7 +20,7 @@ deployServiceCatalog: false
 
 kube:
   registry:
-    hostname: index.docker.io
+    hostname: registry.suse.com
     username: ""
     password: ""
-  organization: splatform
+  organization: cap
