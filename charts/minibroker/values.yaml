@@ -1,6 +1,7 @@
 # Default values for the minibroker
 # Image to use
-image: minibroker:latest
+image: quay.io/kubernetes-service-catalog/minibroker:canary
+tillerImage: gcr.io/kubernetes-helm/tiller:v2.14.2
 # ImagePullPolicy; valid values are "IfNotPresent", "Never", and "Always"
 imagePullPolicy: IfNotPresent
 deploymentPolicy: RollingUpdate
@@ -16,11 +17,4 @@ logLevel: 5
 
 serviceCatalogEnabledOnly: true
 
-deployServiceCatalog: false
-
-kube:
-  registry:
-    hostname: registry.suse.com
-    username: ""
-    password: ""
-  organization: cap
+deployServiceCatalog: true

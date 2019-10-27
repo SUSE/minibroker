@@ -17,8 +17,8 @@ spec:
       serviceAccountName: minibroker
       containers:
       - name: minibroker
-        image: "{{ .Values.kube.registry.hostname }}/{{ .Values.kube.organization }}/{{ .Values.image }}"
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         command:
         - minibroker
         args:
@@ -49,7 +49,7 @@ spec:
         ports:
         - containerPort: 8080
       - name: tiller
-        image: "{{ .Values.kube.registry.hostname }}/{{ .Values.kube.organization }}/helm-tiller:2.14.2"
+        image: {{ .Values.tillerImage | quote }}
         imagePullPolicy: IfNotPresent
         env:
         - name: TILLER_NAMESPACE
