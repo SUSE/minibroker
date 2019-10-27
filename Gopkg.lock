@@ -628,9 +628,6 @@
     "github.com/pmorie/osb-broker-lib/pkg/rest",
     "github.com/pmorie/osb-broker-lib/pkg/server",
     "github.com/prometheus/client_golang/prometheus",
-    "google.golang.org/grpc",
-    "google.golang.org/grpc/keepalive",
-    "google.golang.org/grpc/metadata",
     "gopkg.in/yaml.v2",
     "k8s.io/api/core/v1",
     "k8s.io/apimachinery/pkg/api/errors",
@@ -648,7 +645,6 @@
     "k8s.io/helm/pkg/proto/hapi/chart",
     "k8s.io/helm/pkg/proto/hapi/services",
     "k8s.io/helm/pkg/repo",
-    "k8s.io/helm/pkg/version",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
