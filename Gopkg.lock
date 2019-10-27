@@ -10,12 +10,28 @@
   version = "v0.3.0"
 
 [[projects]]
+  digest = "1:25870183293a3fb61cc9afd060a61d63a486f091db72af01a8ea3449f5ca530d"
+  name = "github.com/Masterminds/goutils"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "41ac8693c5c10a92ea1ff5ac3a7f95646f6123b0"
+  version = "v1.1.0"
+
+[[projects]]
   digest = "1:44ba3152ffe15e49d62050dffc6e68543a0d641e4dcf94ee715ad687c3a648ed"
   name = "github.com/Masterminds/semver"
   packages = ["."]
   pruneopts = "NUT"
   revision = "15d8430ab86497c5c0da827b748823945e1cf1e1"
   version = "v1.4.0"
+
+[[projects]]
+  digest = "1:b9d22e4c6acf0194e00a698d563ad3bacb8d8dab1d73f494517810bf92e029c5"
+  name = "github.com/Masterminds/sprig"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "e4c0945838d570720d876a6ad9b4568ed32317b4"
+  version = "v2.22.0"
 
 [[projects]]
   branch = "master"
@@ -116,6 +132,14 @@
   revision = "24818f796faf91cd76ec7bddd72458fbced7a6c1"
 
 [[projects]]
+  digest = "1:ab3ec1fe3e39bac4b3ab63390767766622be35b7cab03f47f787f9ec60522a53"
+  name = "github.com/google/uuid"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "0cd6bf5da1e1c83f8b45653022c74f71af0538a4"
+  version = "v1.1.1"
+
+[[projects]]
   digest = "1:3d7c1446fc5c710351b246c0dc6700fae843ca27f5294d0bd9f68bab2a810c44"
   name = "github.com/googleapis/gnostic"
   packages = [
@@ -155,6 +179,22 @@
   revision = "9cad4c3443a7200dd6400aef47183728de563a38"
 
 [[projects]]
+  digest = "1:dc54242755f5b6721dd880843de6e45fe234838ea9149ec8249951880fd5802f"
+  name = "github.com/huandu/xstrings"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "f02667b379e2fb5916c3cda2cf31e0eb885d79f8"
+  version = "v1.2.0"
+
+[[projects]]
+  digest = "1:7c47a990a91ab4922f4009c8ba8dcf35dad08e2b697cf26ea87eaae90e3f7aa1"
+  name = "github.com/imdario/mergo"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "1afb36080aec31e0d1528973ebe6721b191b0369"
+  version = "v0.3.8"
+
+[[projects]]
   digest = "1:42c47ace7ccb114261ef7e0d418d274921514ab50a3bf6bdb9e51c3dde8ce13d"
   name = "github.com/json-iterator/go"
   packages = ["."]
@@ -186,6 +226,22 @@
   pruneopts = "NUT"
   revision = "3247c84500bff8d9fb6d579d800f20b3e091582c"
   version = "v1.0.0"
+
+[[projects]]
+  digest = "1:1e5a8bf6fb005f1808852ad1a4bedb7b4b3291af90dec12c4c9e4a955a42c9b2"
+  name = "github.com/mitchellh/copystructure"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "9a1b6f44e8da0e0e374624fb0a825a231b00c537"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:bb676c5bf47f2159355d464cec0aba0af54140789768e5b1a74dbb68452c5aee"
+  name = "github.com/mitchellh/reflectwalk"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "3e2c75dfad4fbf904b58782a80fd595c760ad185"
+  version = "v1.0.1"
 
 [[projects]]
   digest = "1:2f42fa12d6911c7b7659738758631bec870b7e9b4c6be5444f963cdcfccc191f"
@@ -309,7 +365,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:90c08a08042db98e76a49f254528322c8abbc2f394a1fec718ee947f72b2897c"
+  digest = "1:e9550613d8927da0020b784dde121c70a21d72a51bd54924edfed1ff7ae88abb"
   name = "golang.org/x/crypto"
   packages = [
     "cast5",
@@ -320,6 +376,8 @@
     "openpgp/errors",
     "openpgp/packet",
     "openpgp/s2k",
+    "pbkdf2",
+    "scrypt",
   ]
   pruneopts = "NUT"
   revision = "9de5f2eaf759b4c4550b3db39fed2e9e5f86f45c"
@@ -372,7 +430,7 @@
   revision = "2b5a72b8730b0b16380010cfe5286c42108d88e7"
 
 [[projects]]
-  digest = "1:d0c77cd7f939f5a569580ecda9fa0fd42a26a0b3d65fa026c10a87228dd51c5b"
+  digest = "1:c584f682342b63c05146a566331865e58ca4a8a00b9e1076352443fdfe0ea367"
   name = "google.golang.org/grpc"
   packages = [
     ".",
@@ -382,6 +440,7 @@
     "credentials",
     "grpclb/grpc_lb_v1/messages",
     "grpclog",
+    "health/grpc_health_v1",
     "internal",
     "keepalive",
     "metadata",
@@ -549,21 +608,27 @@
   version = "v6.0.0"
 
 [[projects]]
-  digest = "1:0e2ac3a5bf1881bd26d4f8ded4f9d84085a21b74ded3165f2377a0d12d52a6dd"
+  digest = "1:6ff9bd3dbc26d5f63cca12115e9df2e27f6ec6ae501963799271cda66f12bb99"
   name = "k8s.io/helm"
   packages = [
     "pkg/chartutil",
+    "pkg/engine",
     "pkg/getter",
+    "pkg/helm",
     "pkg/helm/environment",
     "pkg/helm/helmpath",
     "pkg/ignore",
+    "pkg/manifest",
     "pkg/plugin",
     "pkg/proto/hapi/chart",
     "pkg/proto/hapi/release",
     "pkg/proto/hapi/services",
     "pkg/proto/hapi/version",
     "pkg/provenance",
+    "pkg/releaseutil",
+    "pkg/renderutil",
     "pkg/repo",
+    "pkg/storage/errors",
     "pkg/sympath",
     "pkg/tlsutil",
     "pkg/urlutil",
@@ -604,6 +669,9 @@
     "github.com/pmorie/osb-broker-lib/pkg/rest",
     "github.com/pmorie/osb-broker-lib/pkg/server",
     "github.com/prometheus/client_golang/prometheus",
+    "google.golang.org/grpc",
+    "google.golang.org/grpc/keepalive",
+    "google.golang.org/grpc/metadata",
     "gopkg.in/yaml.v2",
     "k8s.io/api/core/v1",
     "k8s.io/apimachinery/pkg/api/errors",
@@ -615,11 +683,13 @@
     "k8s.io/client-go/rest",
     "k8s.io/helm/pkg/chartutil",
     "k8s.io/helm/pkg/getter",
+    "k8s.io/helm/pkg/helm",
     "k8s.io/helm/pkg/helm/environment",
     "k8s.io/helm/pkg/helm/helmpath",
     "k8s.io/helm/pkg/proto/hapi/chart",
     "k8s.io/helm/pkg/proto/hapi/services",
     "k8s.io/helm/pkg/repo",
+    "k8s.io/helm/pkg/version",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
