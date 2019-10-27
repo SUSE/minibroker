@@ -15,7 +15,7 @@
 REPO ?= github.com/kubernetes-sigs/minibroker
 BINARY ?= minibroker
 PKG ?= $(REPO)/cmd/$(BINARY)
-REGISTRY ?= osbkit/
+REGISTRY ?= quay.io/kubernetes-service-catalog/
 IMAGE ?= $(REGISTRY)minibroker
 TAG ?= canary
 IMAGE_PULL_POLICY ?= Always
@@ -25,6 +25,11 @@ build:
 
 build-image:
 	docker build -t minibroker-build ./build/build-image
+
+verify: verify-boilerplate
+
+verify-boilerplate:
+	./build/verify-boilerplate.sh
 
 test-unit:
 	go test -v ./...

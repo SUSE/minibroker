@@ -1,3 +1,19 @@
+/*
+Copyright 2019 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package broker
 
 import (
@@ -14,7 +30,7 @@ import (
 // with. NewBroker is the place where you will initialize your
 // Broker the parameters passed in.
 func NewBroker(o Options) (*Broker, error) {
-	mb := minibroker.NewClient(o.HelmRepoUrl, o.ServiceCatalogEnabledOnly)
+	mb := minibroker.NewClient(o.HelmRepoURL, o.ServiceCatalogEnabledOnly)
 	err := mb.Init()
 	if err != nil {
 		return nil, err
@@ -138,34 +154,89 @@ func (b *Broker) Bind(request *osb.BindRequest, c *broker.RequestContext) (*brok
 	b.Lock()
 	defer b.Unlock()
 
-	creds, err := b.Client.Bind(request.InstanceID, request.ServiceID, request.Parameters)
+	operationName, err := b.Client.Bind(request.InstanceID, request.ServiceID, request.BindingID, request.AcceptsIncomplete, request.Parameters)
 	if err != nil {
 		glog.Errorln(err)
 		return nil, err
 	}
 
-	response := broker.BindResponse{
-		BindResponse: osb.BindResponse{
-			Credentials: creds,
-		},
-	}
+	operationKey := osb.OperationKey(operationName)
 	if request.AcceptsIncomplete {
-		response.Async = false // We do not currently accept asynchronous operations on bind
+		// If we accept incomplete, we can just return directly
+		glog.V(5).Infof("Starting asynchronous binding for %s (%s): operation %s", request.InstanceID, request.ServiceID, operationName)
+		response := broker.BindResponse{
+			BindResponse: osb.BindResponse{
+				Async:        true,
+				OperationKey: &operationKey,
+			},
+		}
+		return &response, nil
+	}
+
+	// Get the response back out of the configmaps
+	operationState, err := b.Client.LastBindingOperationState(request.InstanceID, request.BindingID, &operationKey)
+	if err != nil {
+		glog.Errorln(err)
+		return nil, err
+	}
+	if operationState.State != osb.StateSucceeded {
+		glog.Errorf("Synchronous binding of %s failed: %s (%s)", request.InstanceID, *operationState.Description, request.ServiceID)
+		return nil, errors.New("Failed to bind instance")
+	}
+	binding, err := b.Client.GetBinding(request.InstanceID, request.BindingID)
+	if err != nil {
+		glog.Errorf("Failed to get binding %s/%s: %s", request.InstanceID, request.BindingID, err)
+		return nil, err
+	}
+
+	bindResponse := broker.BindResponse{
+		BindResponse: osb.BindResponse{
+			Credentials:     binding.Credentials,
+			SyslogDrainURL:  binding.SyslogDrainURL,
+			RouteServiceURL: binding.RouteServiceURL,
+			VolumeMounts:    binding.VolumeMounts,
+		},
 	}
 
 	glog.V(5).Infof("Successfully binding %s (%s)", request.InstanceID, request.ServiceID)
 
+	return &bindResponse, nil
+}
+
+func (b *Broker) GetBinding(request *osb.GetBindingRequest, c *broker.RequestContext) (*broker.GetBindingResponse, error) {
+	binding, err := b.Client.GetBinding(request.InstanceID, request.BindingID)
+	if err != nil {
+		glog.Errorln(err)
+		return nil, err
+	}
+	response := broker.GetBindingResponse{
+		GetBindingResponse: *binding,
+	}
+	return &response, nil
+}
+
+func (b *Broker) BindingLastOperation(request *osb.BindingLastOperationRequest, c *broker.RequestContext) (*broker.LastOperationResponse, error) {
+	state, err := b.Client.LastBindingOperationState(request.InstanceID, request.BindingID, request.OperationKey)
+	if err != nil {
+		glog.Errorln(err)
+		return nil, err
+	}
+
+	response := broker.LastOperationResponse{LastOperationResponse: *state}
+	glog.V(5).Infof("Successfully got last binding operation of %s::%s (%v/%v): %+v", request.InstanceID, request.BindingID, request.ServiceID, request.PlanID, state)
 	return &response, nil
 }
 
 func (b *Broker) Unbind(request *osb.UnbindRequest, c *broker.RequestContext) (*broker.UnbindResponse, error) {
 	glog.V(5).Infof("Unbinding %s (%s)", request.InstanceID, request.ServiceID)
-	// nothing to do
 
-	response := broker.UnbindResponse{}
-	if request.AcceptsIncomplete {
-		response.Async = false // We do not currently accept asynchronous operations on unbind
+	if err := b.Client.Unbind(request.InstanceID, request.BindingID); err != nil {
+		glog.Errorln(err)
+		return nil, err
 	}
+
+	// The unbind is always synchronous
+	response := broker.UnbindResponse{}
 
 	glog.V(5).Infof("Successfully unbinding %s (%s)", request.InstanceID, request.ServiceID)
 	return &response, nil

@@ -1,7 +1,6 @@
-[prune]
-  go-tests = true
-  non-go = true
-  unused-packages = true
+required = [
+  "github.com/kubernetes/repo-infra/tools/build_tar",
+]
 
 [[constraint]]
   name = "k8s.io/helm"
@@ -13,4 +12,20 @@
 
 [[constraint]]
   name = "github.com/pmorie/osb-broker-lib"
-  version = "0.0.10"
+  revision = "87d71cfbf3427836e5623f1e3843a466348b7be6"
+
+[[constraint]]
+  branch = "update-boilerplate"
+  name = "github.com/kubernetes/repo-infra"
+  source = "github.com/pivotal-k8s/repo-infra"
+
+[prune]
+  go-tests = true
+  non-go = true
+  unused-packages = true
+
+[[prune.project]]
+  name = "github.com/kubernetes/repo-infra"
+  non-go = false
+  unused-packages = false
+
